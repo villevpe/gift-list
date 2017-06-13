@@ -1,0 +1,55 @@
+$background: #87a94d;
+$hoverBackground: #d6d6d6;
+$darkBorderColor: #2e2e2e;
+$reserved: #ff4900;
+$error: #ff4545;
+$link: #273d8e;
+$linkHover: #f3f3f3;
+$logoFont: 'Pacifico',
+sans-serif;
+$textFont: 'Quicksand',
+sans-serif;
+$phone-width: 480px;
+$tablet-width: 768px;
+$desktop-width: 1280px;
+@mixin phone {
+    @media only screen and (max-device-width: #{$phone-width + 1px}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (min-device-width: #{$tablet-width}) and (max-device-width: #{$desktop-width - 1px}) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media only screen and (min-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+@mixin small-screen {
+    @media only screen and (max-width: #{$desktop-width - 1px}) {
+        @content;
+    }
+}
+
+@mixin large-screen {
+    @media only screen and (min-width: #{$desktop-width}) {
+        @content;
+    }
+}
+
+@mixin phone-landscape {
+    @media only screen and (min-device-width: 480px) and (max-device-width: 640px) and (orientation: landscape) {
+        @content;
+    }
+}
+
+@mixin tablet-landscape {
+    @media only screen and (min-device-width: #{$tablet-width}) and (max-device-width: #{$desktop-width - 1px}) and (orientation: landscape) {
+        @content;
+    }
+}

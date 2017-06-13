@@ -1,0 +1,113 @@
+@import '~styles/vars.scss';
+.item {
+    display: flex;
+    align-items: flex-start;
+    color: whitesmoke;
+    font-family: Quicksand, sans-serif;
+    font-size: 1.1em;
+    padding: 3em 0;
+    width: 100%;
+    @include phone {
+        flex-direction: column;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .left {
+        display: flex;
+        justify-content: center;
+        width: 20%;
+        @include phone {
+            width: 100%;
+            padding-bottom: 1em;
+        }
+        .image {
+            display: flex;
+            flex-shrink: 0;
+            background-size: 65%;
+            width: 18vmin;
+            height: 18vmin;
+            max-height: 300px;
+            max-width: 300px;
+            background-repeat: no-repeat;
+            background-color: white;
+            border-radius: 50%;
+            background-position: 50%;
+            @include large-screen {
+                width: 20vmin;
+                height: 20vmin;
+            }
+            @include small-screen {
+                width: 16vmin;
+                height: 16vmin;
+            }
+            @include phone {
+                width: 25vmin;
+                height: 25vmin;
+            }
+        }
+    }
+    .right {
+        display: flex;
+        flex-shrink: 1;
+        flex-direction: column;
+        width: 75%;
+        padding-left: 2em;
+        @include small-screen {
+            padding-left: 1em;
+            font-size: 0.9em;
+        }
+    }
+    .title {
+        font-size: 1.5em;
+    }
+    .description {
+        padding: 1em 0;
+    }
+    .link {
+        color: $link;
+        font-weight: bold;
+        font-size: 0.9em;
+        transition: color .2s ease;
+        cursor: pointer;
+        text-decoration: none;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: inline-block;
+        overflow: hidden;
+        width: 90%;
+        &:hover {
+            color: $linkHover;
+            transition: color .2s ease;
+        }
+    }
+    .actions {
+        display: flex;
+        padding-top: 2em;
+        @include phone {
+            justify-content: center;
+        }
+        .action {
+            display: flex;
+            align-items: center;
+            padding: 0.5em 1em;
+            text-transform: uppercase;
+            border: 1px solid white;
+            border-radius: 25px;
+            cursor: pointer;
+            background: transparent;
+            transition: background .2s ease-out;
+            &:hover:not(.reserved) {
+                background: rgba(255, 255, 255, 0.3);
+                transition: background .2s ease-in;
+            }
+            &.reserved {
+                border: none;
+                color: $reserved;
+                font-weight: bold;
+                @include phone {
+                    font-size: 4vmin;
+                }
+            }
+        }
+    }
+}

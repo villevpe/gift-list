@@ -1,0 +1,40 @@
+{
+    "items": [
+        {
+            "id": "item_001",
+            "image": {
+                "url": "./gift.png",
+                "title": "A Demo gift"
+            },
+            "title": "Demo gift 1",
+            "description": "A simple gift for testing purposes",
+            "url": "https://www.google.com",
+            "details": "",
+            "reserved": false
+        },
+        {
+            "id": "item_002",
+            "image": {
+                "url": "./gift.png",
+                "title": "A Demo gift"
+            },
+            "title": "Demo gift 2",
+            "description": "A simple gift for testing purposes",
+            "url": "https://www.google.com",
+            "details": "",
+            "reserved": false
+        },
+        {
+            "id": "item_003",
+            "image": {
+                "url": "./gift.png",
+                "title": "A Demo gift"
+            },
+            "title": "Demo gift 3",
+            "description": "A simple gift for testing purposes",
+            "url": "https://www.google.com",
+            "details": "",
+            "reserved": false
+        }
+    ]
+}

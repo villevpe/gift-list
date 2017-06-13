@@ -1,0 +1,109 @@
+@import '~styles/vars.scss';
+img.background-image {
+    position: absolute;
+    left: 0%;
+    width: 100vmin;
+    max-width: 1920px;
+    bottom: 5vh;
+    z-index: 0;
+
+    @include phone {
+        bottom: 30vh;
+    }
+
+    @include phone-landscape {
+        bottom: 2vh;
+    }
+    @include tablet-landscape {
+        bottom: 1vh;
+    }
+}
+
+.auth {
+    display: flex;
+    flex-direction: column;
+    padding-top: 6vmin;
+}
+
+.auth-container {
+    font-size: 5vmin;
+    position: relative;
+    z-index: 1;
+    label.auth-placeholder-text {
+        color: white;
+        position: absolute;
+        top: 0.5em;
+        left: 0;
+        font-family: $textFont;
+        transition: top .2s ease;
+        width: 100%;
+        text-align: center;
+    }
+    input.auth-input {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid white;
+        padding: 1em;
+        font-size: 5vmin;
+        color: white;
+        font-family: $textFont;
+        width: 100%;
+        &:focus,
+        &:active {
+            outline: 0;
+        }
+        &:active+label,
+        &:focus+label,
+        &.active+label {
+            top: -1em;
+            transition: top .2s ease;
+        }
+        @include large-screen {
+            font-size: 3vmin;
+        }
+    }
+    @include phone {
+        font-size: 6vmin;
+    }
+    @include large-screen {
+        font-size: 3vmin;
+    }
+}
+
+.auth-submit {
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    button {
+        border: 1px solid white;
+        padding: 1em 4em;
+        border-radius: 2em;
+        background: transparent;
+        color: white;
+        text-transform: uppercase;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background .2s ease;
+        outline: 0;
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transition: background .2s ease;
+        }
+        &:active {
+            outline: 0;
+        }
+    }
+}
+
+.auth.invalid {
+    label {
+        color: $error;
+        transition: color .2s ease;
+    }
+    input {
+        color: $error;
+        border-color: $error;
+        transition: all .2s ease;
+    }
+}
