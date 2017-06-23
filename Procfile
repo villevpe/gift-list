@@ -1,0 +1,1 @@
+web: ACCESS_TOKEN=demo node ./dist/server.js
