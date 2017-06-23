@@ -18,7 +18,7 @@ The stack of this project is as follows:
 This project requires [Node.js](https://nodejs.org/en/) and [PostgreSQL](http://www.postgresqltutorial.com/install-postgresql/) server instance.
 
 **Step 1:**
-Install or verify that both Node.js and PostgreSQL server are installed for your system. PostgreSQL server needs to be running for this application. Edit the gifts you wish to have in the application by editing **/src/server/content.json** directly (to be changed at some point to allow full UI for editing gifts).
+Install or verify that both Node.js and PostgreSQL server are installed for your system. PostgreSQL server needs to be running for this application. Edit the gifts you wish to have in the application by editing **/src/server/content.json** directly (Note: this will change at some point in favor of web UI for editing gifts).
 
 **Step 2:**
 Clone or download the project
