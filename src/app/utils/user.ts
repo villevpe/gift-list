@@ -1,17 +1,12 @@
 import xhr from '../utils/xhr';
 
-class User {
+export default class User {
 
-    private _authenticated: boolean = false;
-
-    public authenticated() {
+    public static authenticated() {
         return xhr.post('/user/authenticated');
     }
 
-    public login(password) {
+    public static login(password: string) {
         return xhr.post('/user/login', { p: password });
     }
 }
-
-const user = new User();
-export default user;

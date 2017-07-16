@@ -1,4 +1,4 @@
-const ACCESS_TOKEN = process.env.ACCESS_TOKEN || "demo";
+const ACCESS_TOKEN = process.env.ACCESS_TOKEN || 'demo';
 
 class User {
 

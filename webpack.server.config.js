@@ -1,5 +1,5 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   // The target should be set to "node" to avoid packaging built-ins.
@@ -7,7 +7,6 @@ module.exports = {
   node: {
     __dirname: false // fixes issue with server.js __dirname pointing to fs root
   },
-  // The entry should be our server entry file, not the default one.
   entry: './src/server/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -34,5 +33,6 @@ module.exports = {
   externals: Object.keys(require('./package.json').dependencies),
   devtool: '#source-map',
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin()
   ]
 }

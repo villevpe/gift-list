@@ -1,34 +1,34 @@
 const express = require('express');
-const router = express.Router();
 const auth = require('./auth');
 const jsonParser = require('body-parser').json();
 const List = require('../models/list');
 
+const router = express.Router();
+
 /**
  * Route items and provide socket.io to all routes
- * @param {*} io socket.io instance 
+ * @param {*} io socket.io instance
  */
 function routeItems(io) {
-
     router
-        .get('/', function (req, res) {
+        .get('/', (req, res) => {
             res.redirect('../');
         })
-        .post('/', auth.guard, function (req, res) {
-            let data = List.getList().then(results => {
-                res.send(results);
-            });
+        .post('/', auth.guard, (req, res) => {
+            List
+                .getList()
+                .then(results => res.send(results));
         })
-        .post('/reserve/:id', auth.guard, jsonParser, function (req, res) {
+        .post('/reserve/:id', auth.guard, jsonParser, (req, res) => {
             processReservationAction(req, res, List.reserveItem);
         })
-        .post('/unreserve/:id', auth.guard, jsonParser, function (req, res) {
+        .post('/unreserve/:id', auth.guard, jsonParser, (req, res) => {
             processReservationAction(req, res, List.unreserveItem);
         });
 
     function processReservationAction(req, res, action) {
-        let token = validateToken(req.body.token);
-        let id = req.params['id'];
+        const token = validateToken(req.body.token);
+        const id = req.params.id;
         if (!token || !id) {
             failed(List.errors.TOKEN_OR_ID_MISSING, res);
         } else {
@@ -41,23 +41,24 @@ function routeItems(io) {
     }
 
     function validateToken(rawToken) {
-        let _token = rawToken.slice(0, 15);
-        return _token;
+        return rawToken.slice(0, 15);
     }
 
     function failed(message, res) {
         res.status(500).send({
             status: 500,
-            message: message
+            message,
         });
     }
 
     function updated(update, res) {
         io.emit('list_update', { items: update.items });
-        res.status(200).send({
-            status: 200,
-            message: update.item
-        })
+        res
+            .status(200)
+            .send({
+                status: 200,
+                message: update.item,
+            });
     }
 
     return router;

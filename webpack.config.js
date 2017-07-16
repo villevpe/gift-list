@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
 
@@ -26,6 +27,12 @@ module.exports = {
                 options: { transpileOnly: true, appendTsSuffixTo: [/\.vue$/] }
             },
             {
+                test: /\.ts?$/,
+                exclude: /node_modules/,
+                enforce: 'pre',
+                loader: 'tslint-loader'
+            },
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
@@ -48,17 +55,25 @@ module.exports = {
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'file-loader?name=[name].[ext]&publicPath=./'
+            },
+            {
+                test: /\.tsx$/,
+                exclude: /node_modules/,
+                enforce: 'pre',
+                loader: 'tslint-loader',
+                options: { /* Loader options go here */ }
             }
         ]
     },
-     devtool: '#source-map',
-     	plugins: [
-		new CompressionPlugin({
-			asset: "[path].gz[query]",
-			algorithm: "gzip",
-			test: /\.(js|html)$/,
-			threshold: 10240,
-			minRatio: 0.8
-		})
-	]
+    devtool: '#source-map',
+    plugins: [
+        new webpack.optimize.ModuleConcatenationPlugin(),
+        new CompressionPlugin({
+            asset: "[path].gz[query]",
+            algorithm: "gzip",
+            test: /\.(js|html)$/,
+            threshold: 10240,
+            minRatio: 0.8
+        })
+    ]
 }

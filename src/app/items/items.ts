@@ -1,13 +1,8 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
-import xhr from '../utils/xhr'
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import xhr from '../utils/xhr';
 import * as io from 'socket.io-client';
 import { ItemService as Service, ItemData } from './items.service';
-
-// Could be also used via definitelyTyped...
-declare interface Socket {
-    on(eventName: string, callback: Function): Function
-}
 
 const ERROR_CODES = {
     ALREADY_RESERVED: 'already_reserved',
@@ -24,6 +19,12 @@ const ERROR_MESSAGES = {
     WRONG_TOKEN: 'Wrong password'
 };
 
+const ERROR_MESSAGES_LOOKUP = {
+    [ERROR_CODES.ALREADY_RESERVED]: ERROR_MESSAGES.ALREADY_RESERVED,
+    [ERROR_CODES.WRONG_TOKEN]: ERROR_MESSAGES.WRONG_TOKEN,
+    [ERROR_CODES.TOKEN_RESERVED]: ERROR_MESSAGES.TOKEN_RESERVED
+};
+
 const MODALS = {
     RESERVE: 'reserve',
     UNRESERVE: 'unreserve'
@@ -31,15 +32,15 @@ const MODALS = {
 
 @Component
 export default class Items extends Vue {
-    items: ItemData[] = []
-    activeItem: ItemData = null
-    modals: object = MODALS
-    private modal: string = null
-    private token: string = ""
-    private modalContentClickEvent: Event
-    private reserveSuccess: boolean = false
-    private reserveError: string = null
-    private socket: Socket
+    items: ItemData[] = [];
+    activeItem: ItemData = null;
+    modals: object = MODALS;
+    private modal: string = null;
+    private token: string = '';
+    private modalContentClickEvent: Event;
+    private reserveSuccess: boolean = false;
+    private reserveError: string = null;
+    private socket: SocketIOClient.Emitter;
 
     created() {
         this.load();
@@ -48,7 +49,7 @@ export default class Items extends Vue {
 
     updated() {
         if (this.modal) {
-            let element = <HTMLInputElement>this.$refs.bookingInput;
+            const element = <HTMLInputElement> this.$refs.bookingInput;
             if (element) {
                 element.focus();
             }
@@ -57,7 +58,7 @@ export default class Items extends Vue {
 
     bindSocketEvents() {
         this.socket = io();
-        this.socket.on('list_update', data => {
+        this.socket.on('list_update', (data) => {
             this.items = data.items;
         });
     }
@@ -66,24 +67,24 @@ export default class Items extends Vue {
         this.modal = null;
     }
 
-    onModalClick(event) {
+    onModalClick(event: Event) {
         if (event !== this.modalContentClickEvent) {
             this.modal = null;
         }
     }
 
-    onModalContentClick(event) {
+    onModalContentClick(event: Event) {
         this.modalContentClickEvent = event;
     }
 
-    onUnreserve(item) {
+    onUnreserve(item: ItemData) {
         this.reserveError = null;
         this.reserveSuccess = false;
         this.activeItem = item;
         this.modal = MODALS.UNRESERVE;
     }
 
-    onReserve(item) {
+    onReserve(item: ItemData) {
         this.reserveError = null;
         this.reserveSuccess = false;
         this.activeItem = item;
@@ -93,7 +94,7 @@ export default class Items extends Vue {
     onConfirmClick() {
         this.reserveError = null;
         this.reserveSuccess = false;
-        let action = this.modal === MODALS.RESERVE ? Service.reserve : Service.unreserve;
+        const action = this.modal === MODALS.RESERVE ? Service.reserve : Service.unreserve;
 
         action(this.activeItem, this.token)
             .then(() => {
@@ -101,24 +102,21 @@ export default class Items extends Vue {
                 this.load();
                 setTimeout(() => this.modal = null, 1500);
             })
-            .catch(error => {
+            .catch((error) => {
                 this.load();
                 console.error(error.message ? error.message : error);
-                if (error.message === ERROR_CODES.ALREADY_RESERVED) {
-                    this.reserveError = ERROR_MESSAGES.ALREADY_RESERVED;
-                } else if (error.message === ERROR_CODES.TOKEN_RESERVED) {
-                    this.reserveError = ERROR_MESSAGES.TOKEN_RESERVED;
-                } else if (error.message === ERROR_CODES.WRONG_TOKEN) {
-                    this.reserveError = ERROR_MESSAGES.WRONG_TOKEN;
-                } else {
-                    this.reserveError = ERROR_MESSAGES.OTHER;
-                }
+                this.reserveError = determineErrorMessage(error.message);
             });
+
+        function determineErrorMessage(code: string) {
+            console.log(code, ERROR_MESSAGES_LOOKUP);
+            return code ? (ERROR_MESSAGES_LOOKUP[code] || ERROR_MESSAGES.OTHER) : ERROR_MESSAGES.OTHER;
+        }
     }
 
     load() {
         return Service.getItems()
-            .then(items =>   this.items = items)
+            .then(items => this.items = items)
             .catch(error => console.warn(error));
     }
 

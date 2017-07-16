@@ -1,8 +1,8 @@
 const compression = require('compression');
 
 const config = {
-    compression: { 
-        filter: compressOnlyUncompressed 
+    compression: {
+        filter: compressOnlyUncompressed
     },
     port: process.env.PORT || 3000,
     session: {
@@ -23,6 +23,5 @@ function compressOnlyUncompressed(req, res) {
     }
     return compression.filter(req, res);
 }
-
 
 module.exports = config;
