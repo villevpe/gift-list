@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import Vue from 'vue';
+import Component from 'vue-class-component';
 import { ItemService as Service, ItemData } from '../items.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ItemService as Service, ItemData } from '../items.service';
     }
 })
 export default class Item extends Vue {
-    item: ItemData
+    item: ItemData;
 
     onReserveButtonClick() {
         this.$emit('reserve', this.item);

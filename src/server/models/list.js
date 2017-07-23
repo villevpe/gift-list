@@ -18,7 +18,7 @@ class List {
         return ERROR_CODES;
     }
 
-    static ready() {
+    static init() {
         return Storage.init();
     }
 

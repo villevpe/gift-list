@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 
 module.exports = {
@@ -8,7 +9,7 @@ module.exports = {
         path.resolve(__dirname, './src/index.ts')
     ],
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
         publicPath: '/dist/'
     },
@@ -38,11 +39,11 @@ module.exports = {
                 options: {
                     esModule: true,
                     loaders: {
-                        'scss': 'vue-style-loader!css-loader!sass-loader',
-                        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+                        scss: 'vue-style-loader!css-loader!sass-loader',
+                        sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
                     },
                     postcss: [
-                        require('autoprefixer')({
+                        autoprefixer({
                             browsers: ['last 4 versions']
                         })
                     ]
@@ -55,25 +56,19 @@ module.exports = {
             {
                 test: /\.(png|woff|woff2|eot|ttf|svg)$/,
                 loader: 'file-loader?name=[name].[ext]&publicPath=./'
-            },
-            {
-                test: /\.tsx$/,
-                exclude: /node_modules/,
-                enforce: 'pre',
-                loader: 'tslint-loader',
-                options: { /* Loader options go here */ }
             }
         ]
     },
-    devtool: '#source-map',
+    devtool: 'inline-source-map',
     plugins: [
         new webpack.optimize.ModuleConcatenationPlugin(),
         new CompressionPlugin({
-            asset: "[path].gz[query]",
-            algorithm: "gzip",
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
             test: /\.(js|html)$/,
             threshold: 10240,
             minRatio: 0.8
         })
     ]
 }
+;

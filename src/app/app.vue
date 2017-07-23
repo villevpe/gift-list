@@ -1,13 +1,11 @@
 <template>
-  <div class="app"
-       :class="{auth: authenticated}">
-    <div class="app-container">
-      <h1>{{appName}}</h1>
-      <items v-if="authenticated"></items>
-      <auth v-else
-            v-on:login="onLogin"></auth>
+    <div class="app" :class="{auth: authenticated}">
+        <div class="app-container">
+            <h1>{{appName}}</h1>
+            <items v-if="authenticated"></items>
+            <auth v-else v-on:login="onLogin"></auth>
+        </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts" src="./app.ts"></script>

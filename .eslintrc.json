@@ -18,6 +18,7 @@
             "error",
             120
         ],
-        "comma-dangle": "off"
+        "comma-dangle": "off",
+        "import/no-extraneous-dependencies": [2, { "devDependencies": true }]
     }
 }

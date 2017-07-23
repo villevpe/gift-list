@@ -158,7 +158,7 @@ class List {
         return ERROR_CODES;
     }
 
-    static ready() {
+    static init() {
         return Storage.init();
     }
 
@@ -263,7 +263,7 @@ const ItemsRoute = __webpack_require__(16);
 const app = express();
 
 List
-    .ready()
+    .init()
     .then(() => {
         const server = createServer();
         const io = SocketIo.listen(server);
@@ -373,19 +373,19 @@ const urlParams = url.parse(process.env.DATABASE_URL || 'postgres://localhost:54
 const auth = urlParams.auth ? urlParams.auth.split(':') : false;
 
 const pool = new pg.Pool(process.env.DATABASE_URL ?
-    {
-        user: auth[0],
-        password: auth[1],
-        host: urlParams.hostname,
-        port: urlParams.port,
-        database: urlParams.pathname.split('/')[1],
-        ssl: true
-    } :
-    {
-        host: urlParams.hostname,
-        port: urlParams.port,
-        ssl: false
-    }
+{
+    user: auth[0],
+    password: auth[1],
+    host: urlParams.hostname,
+    port: urlParams.port,
+    database: urlParams.pathname.split('/')[1],
+    ssl: true
+} :
+{
+    host: urlParams.hostname,
+    port: urlParams.port,
+    ssl: false
+}
 );
 
 class Storage {

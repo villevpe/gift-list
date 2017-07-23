@@ -11,7 +11,7 @@ const ItemsRoute = require('./routes/items');
 const app = express();
 
 List
-    .ready()
+    .init()
     .then(() => {
         const server = createServer();
         const io = SocketIo.listen(server);

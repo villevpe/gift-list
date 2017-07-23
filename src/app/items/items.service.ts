@@ -14,11 +14,11 @@ export class ItemService {
         return xhr.post('/items');
     }
 
-    static reserve(item: ItemData, reservationToken: string) {
-    return xhr.post('/items/reserve/' + item.id, { token: reservationToken });
-}
+    static reserve(item: ItemData, reservationToken: string): Promise<{}> {
+        return xhr.post('/items/reserve/' + item.id, { token: reservationToken });
+    }
 
-    static unreserve(item: ItemData, reservationToken: string) {
-    return xhr.post('/items/unreserve/' + item.id, { token: reservationToken });
-}
+    static unreserve(item: ItemData, reservationToken: string): Promise<{}> {
+        return xhr.post('/items/unreserve/' + item.id, { token: reservationToken });
+    }
 }
