@@ -11,7 +11,7 @@ export declare interface ItemData {
 export class ItemService {
 
     static getItems(): Promise<ItemData[]> {
-        return xhr.post('/items');
+        return xhr.get('/items');
     }
 
     static reserve(item: ItemData, reservationToken: string): Promise<{}> {

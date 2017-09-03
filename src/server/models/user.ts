@@ -1,10 +1,8 @@
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN || 'demo';
 
-class User {
+export module User {
 
-    static authenticate(password) {
+    export function authenticate(password: string) {
         return password === ACCESS_TOKEN;
     }
 }
-
-module.exports = User;
